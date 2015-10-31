@@ -1,0 +1,16 @@
+package com.jdlsoft.cajondesastre.pruebas;
+
+public class Bar {
+
+	public static void main(String[] args) {
+		Bar bar = new Bar();
+		Foo foo = new Foo();
+		
+
+	}
+
+}
+
+class Foo extends Bar{
+	
+}

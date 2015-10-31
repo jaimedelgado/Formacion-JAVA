@@ -1,0 +1,17 @@
+package com.crismirjai.gestionproductosspring.services;
+
+import java.util.List;
+
+import com.crismirjai.gestionproductosspring.domain.Producto;
+/**
+ * 
+ * @author Miriam del Rio 
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ *
+ */
+public interface IProductoDAO {
+	public Producto getProductoById(String id);
+	public List<Producto> getProductos();
+	public void guardarProducto(Producto producto);
+}

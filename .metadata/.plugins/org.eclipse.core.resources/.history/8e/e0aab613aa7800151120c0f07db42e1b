@@ -1,0 +1,62 @@
+package com.jdlsoft.facturasj2eemejorado.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.jdlsoft.facturasj2eemejorado.dao.DAO;
+import com.jdlsoft.facturasj2eemejorado.dao.impl.ProductoDAO;
+import com.jdlsoft.facturasj2eemejorado.model.Producto;
+
+@WebServlet("/SvAltaCliente")
+public class SvAltaCliente extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+System.out.println("Funciona!");
+		
+		DAO<Producto> productosDAO = new ProductoDAO();  // Declaramos "productosDAO"
+		Producto producto = new Producto();
+		String strId = request.getParameter("id");
+		String strNombre = request.getParameter("nombre");
+		String strTelefono = request.getParameter("telefono");
+		String strCIF = request.getParameter("cif");
+		boolean ok = true;
+		String recurso = "WEB-INF/altaCliente.jsp";
+		double precio = 0.0;
+		int id = 0;
+		
+		try{
+			id = Integer.parseInt(strId);
+		} catch (NumberFormatException e){
+			ok = false;
+		}
+		
+		
+		if (strNombre == "" || strTelefono== "" || strCIF == ""){
+			ok = false;
+		}
+		
+		if (!ok){
+			//request.setAttribute("listaProductos", listaProductos);
+			RequestDispatcher rd = request.getRequestDispatcher(recurso);
+			System.out.println(ok);
+			rd.forward(request, response);
+		}else{
+			productosDAO.create(new Producto(id, strNombre, precio));
+			System.out.println(productosDAO.getAll());
+			recurso = "WEB-INF/productoCorrecto.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(recurso);
+			System.out.println(ok);
+			rd.forward(request, response);
+		} 
+			
+	}
+
+}

@@ -1,0 +1,20 @@
+package com.jdlsoft.gestionCoches.daos.test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Date;
+
+import org.junit.Test;
+
+import com.jdlsoft.gestionCoches.domain.Coche;
+
+public class CocheDAOTest {
+
+	@Test
+	public void createTest() {
+		Coche coche = new Coche();
+		coche.setFechaMatriculacion(new Date());
+		
+	}
+
+}

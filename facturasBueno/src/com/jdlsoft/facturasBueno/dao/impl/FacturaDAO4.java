@@ -1,0 +1,175 @@
+package com.jdlsoft.facturasBueno.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.jdlsoft.facturasBueno.dao.IClienteDAO;
+import com.jdlsoft.facturasBueno.dao.IFacturaDAO;
+import com.jdlsoft.facturasBueno.helpers.JDBCHelper;
+import com.jdlsoft.facturasBueno.model.Cliente;
+import com.jdlsoft.facturasBueno.model.Factura;
+import com.jdlsoft.facturasBueno.model.LineaDetalleFactura;
+
+public class FacturaDAO4 implements IFacturaDAO {
+
+	@Override
+	public void create(Factura t) {
+		Connection con = JDBCHelper.getConnection();
+		final String selectSQL = "INSERT INTO facturas "
+									  + "(id, fecha, id_cliente, observaciones) "
+									  + "VALUES "
+									  + "(?,?,?,?)";
+		PreparedStatement preparedStatement;
+		PreparedStatement listaStatement;
+		try {
+			preparedStatement = con.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, t.getCodigo());
+			preparedStatement.setTimestamp(2, (Timestamp) t.getFecha());
+			preparedStatement.setInt(3, t.getCliente().getId());
+			preparedStatement.setString(4, t.getObservaciones());
+			preparedStatement.executeUpdate();
+			
+			ResultSet resultSet = con.prepareStatement("SELECT LAST_INSERT_ID();").executeQuery();
+			resultSet.next();
+			int codigo = resultSet.getInt(1);
+			con.commit();
+			for	(int i = 0; i < t.getDetalle().size(); i++){
+				final String listaSQL = "INSERT INTO detallefacturas "
+											+ "(ID_PRODUCTO, CANTIDAD, PRECIO, CODIGO_FACTURA) "
+											+ "VALUES "
+											+ "(?, ?, ?, ?)";
+				listaStatement = con.prepareStatement(listaSQL);
+				listaStatement.setInt(1, t.getDetalle().get(i).getProducto().getId());
+				listaStatement.setInt(2, t.getDetalle().get(i).getCantidad());
+				listaStatement.setDouble(3, t.getDetalle().get(i).getPrecio());
+				listaStatement.setInt(4, codigo);
+				listaStatement.executeUpdate();
+//				con.commit();
+			}
+			con.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Factura read(int id) {
+		Connection con = JDBCHelper.getConnection();
+		final String selectSQL = "SELECT F.ID, "
+									  + "F.FECHA, "
+									  + "C.ID, "
+									  + "C.NOMBRE, "
+									  + "C.TELEFONO, "
+									  + "C.CIF, "
+									  + "F.OBSERVACIONES "
+									  + "FROM facturas F, clientes C "
+									  + "WHERE F.ID = ? "
+									  + "AND C.ID = F.ID_CLIENTE";
+		Factura factura = null;
+		try {
+			PreparedStatement preparedStatement = con.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()){
+				factura = new Factura();
+				Cliente c = new Cliente();
+				factura.setCodigo(resultSet.getInt(1));
+				factura.setFecha(resultSet.getDate(2));
+				c.setId(resultSet.getInt(3));
+				c.setCIF(resultSet.getString(6));
+				c.setNombre(resultSet.getString(4));
+				c.setTelefono(resultSet.getString(5));
+				factura.setCliente(c);
+				factura.setObservaciones(resultSet.getString(7));				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return factura;
+	}
+	
+/*	@Override
+	public Factura read(int codigo) {
+		Connection con = JDBCHelper.getConnection();
+		Factura factura = null;
+		try {
+			Statement statement = con.createStatement();
+			Cliente c = new Cliente();
+			String strSQL = "SELECT F.CODIGO,"
+							+ "F.FECHA,"
+							+ "F.OBSERVACIONES"
+							+ "C.NOMBRE"
+							+ "C.TELEFONO"
+							+ "C.CIF"
+							+ "FROM facturas F, clientes C"
+							+ "WHERE F.CODIGO = '" + codigo
+							+ "' AND C.ID = F.ID_CLIENTE";
+			ResultSet resultSet = statement.executeQuery(strSQL); 
+			factura = new Factura();
+			while (resultSet.next()){
+				factura.setCodigo(resultSet.getInt(1));
+				factura.setFecha(resultSet.getDate(2));
+				c.setId(resultSet.getInt(3));
+				factura.setCliente(c);
+				factura.setObservaciones(resultSet.getString(4));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return factura;
+	}*/
+
+	@Override
+	public void update(Factura t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Factura> getAll() {
+		Connection con = JDBCHelper.getConnection();
+		List<Factura> listaFactura = new ArrayList<Factura>();
+		try {
+			Statement statement = con.createStatement();
+			String strSQL = "SELECT * FROM facturas";
+			ResultSet resultSet = statement.executeQuery(strSQL);
+			while (resultSet.next()){
+				Factura factura = new Factura();
+				factura.setCodigo(resultSet.getInt(1));
+				factura.setFecha(resultSet.getDate(2));
+				factura.setObservaciones(resultSet.getString(4));
+				int id= resultSet.getInt(3);
+				IClienteDAO c = new ClienteDAO4();
+				Cliente cliente = c.read(id);
+				factura.setCliente(cliente);
+			//	LineaDetalleFacturaDAO ldfdao = new LineaDetalleFacturaDAO();
+				//List<LineaDetalleFactura> lista = ldfdao.getLineasFromFactura(resultSet.getInt(1));
+				//factura.setDetalle(lista);
+				listaFactura.add(factura);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaFactura;
+	}
+
+	
+	
+
+}

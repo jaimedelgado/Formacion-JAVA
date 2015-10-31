@@ -1,0 +1,11 @@
+package com.jdlsoft.gestionCoches.interfaces;
+
+import com.jdlsoft.gestionCoches.domain.Coche;
+import com.jdlsoft.gestionCoches.exceptions.DAOException;
+
+public interface ICocheDAO {
+	//Comentado con javadoc
+	public void create(Coche coche) throws DAOException;
+		
+	}
+}

@@ -1,0 +1,66 @@
+package com.crismirjai.gestionproductosspring.model.test;
+
+import static org.junit.Assert.*;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Test;
+
+import com.crismirjai.gestionproductosspring.domain.Producto;
+import com.crismirjai.gestionproductosspring.services.IProductoDAO;
+import com.crismirjai.gestionproductosspring.services.impl.ProductoDAO;
+
+/**
+ * 29/10/2015 Pruebas unitarias de la gestión de productos. Asegura que todos
+ * los métodos de la implementación de la interfaz sean correctos y que
+ * comprueba que todo funcione correctamente cuando se añadan nuevas
+ * funcionalidades
+ * 
+ * @author Miriam del Río
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ * 
+ */
+public class ProductoDAOTest {
+	/**
+	 * Comprueba que el método guardarProducto de la clase ProductoDAO funcione
+	 * correctamente. Para ello crea un producto, lo guarda en la base de datos
+	 * y comprueba que haya sido añadido a la base de datos correctamente
+	 */
+	@Test
+	public void guardarProductoTest() {
+		IProductoDAO ipd = new ProductoDAO();
+		Calendar c = Calendar.getInstance();
+		c.set(2015, 2, 1);
+		ipd.guardarProducto(new Producto(String.valueOf(Integer.MAX_VALUE-1), "TESGUARDAR", new Date(), 100.5, 30));
+		assertNotNull(ipd.getProductoById(String.valueOf(Integer.MAX_VALUE-1)));
+	}
+	/**
+	 * Comprueba que el método getProductoById de la clase ProductoDAO funcione
+	 * correctamente. Para ello comprueba que un producto que ya está en la base
+	 * de datos sea obtenido correctamente de la base de datos
+	 */
+	@Test
+	public void getProductoByIdTest() {
+		IProductoDAO ipd = new ProductoDAO();
+		Producto producto = ipd.getProductoById(String.valueOf(Integer.MAX_VALUE));
+		System.out.println(producto);
+		assertNotNull(producto);
+	}
+
+	/**
+	 * Comprueba que el método getProductos de la clase ProductoDAO funcione
+	 * correctamente. Para ello comprueba que la lista de productos obtenidos de
+	 * la base de datos no esté vacía
+	 */
+	@Test
+	public void getProductosTest() {
+		IProductoDAO ipd = new ProductoDAO();
+		List<Producto> productos = ipd.getProductos();
+		assertNotNull(productos);
+	}
+
+
+}

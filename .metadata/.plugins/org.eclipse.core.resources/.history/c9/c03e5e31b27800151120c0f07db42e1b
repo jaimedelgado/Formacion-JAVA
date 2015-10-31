@@ -1,0 +1,192 @@
+package com.jdlsoft.facturasj2eemejorado.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.jdlsoft.facturasj2eemejorado.dao.DAO;
+import com.jdlsoft.facturasj2eemejorado.helpers.JDBCHelper;
+import com.jdlsoft.facturasj2eemejorado.model.Cliente;
+import com.jdlsoft.facturasj2eemejorado.model.Factura;
+import com.jdlsoft.facturasj2eemejorado.model.LineaDetalleFactura;
+import com.jdlsoft.facturasj2eemejorado.model.Producto;
+
+public class FacturaDAO implements DAO<Factura>{
+
+	@Override
+	public void create(Factura factura) {
+		if(factura!=null){
+			Connection con = JDBCHelper.getConnection();
+			try {
+				String strSQL = "INSERT INTO `facturacion`.`facturas` (`fecha`, `observaciones`, `id_cliente`) VALUES (?, ?, ?)";
+				PreparedStatement preparedstatement = con.prepareStatement(strSQL);
+				preparedstatement.setString(1, factura.getFecha().toString());
+				preparedstatement.setString(2, factura.getObservaciones());
+				preparedstatement.setInt(3, factura.getCliente().getId());
+				System.out.println(strSQL);
+				preparedstatement.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public Factura read(int id) {
+		/*select * 
+		from facturas F, detalle_facturas DF
+		where f.codigo = DF.codigo_factura and F.codigo = 201;
+		*/
+		Connection con = JDBCHelper.getConnection();
+		final String selectSQL="SELECT * FROM FACTURAS WHERE ID=?";
+		Factura factura=null;
+		try {
+			PreparedStatement preparedStatement= con.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet= preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				factura = new Factura();
+				factura.setCodigo(resultSet.getInt(1));
+				factura.setFecha(new Date(resultSet.getString(2)));
+				factura.setObservaciones(resultSet.getString(3));
+				factura.setCliente(new ClienteDAO().read(resultSet.getInt(4)));
+			}
+			
+			final String selectLineasSQL="select * from facturas F, detalle_facturas DF	where f.codigo = DF.codigo_factura and F.codigo = ?";
+			PreparedStatement preparedStatement2 = con.prepareStatement(selectLineasSQL);
+			preparedStatement2.setInt(1, id);
+			ResultSet resultSet2 = preparedStatement2.executeQuery();
+			
+			while(resultSet2.next()){
+				
+				LineaDetalleFactura ldf = new LineaDetalleFactura();
+				ldf.setCantidad(resultSet2.getInt(8));
+				ldf.setPrecio(resultSet2.getInt(9));
+				final String selectProductoSQL="select * from productos P where P.id = ?";
+				PreparedStatement preparedStatement3 = con.prepareStatement(selectProductoSQL);
+				preparedStatement3.setInt(1, id);
+				ResultSet resultSet3 = preparedStatement3.executeQuery();
+				
+				while(resultSet3.next()){
+					Producto producto = new Producto();
+					producto.setId(resultSet3.getInt(1));
+					producto.setNombre(resultSet3.getString(2));
+					producto.setPrecio(resultSet2.getDouble(3));
+					ldf.setProducto(producto);
+					
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return factura;
+	}
+	//@Override
+	/*public Producto read(int id) {
+		Connection con = JDBCHelper.getConnection();
+		Producto producto = null;
+		try {
+			Statement statement = con.createStatement();
+			String strSQL = "select * from productos where id=" + id;
+			ResultSet resultSet = statement.executeQuery(strSQL);
+			System.out.println(strSQL);
+			producto=new Producto();
+			while(resultSet.next()){
+				producto.setId(resultSet.getInt(1));
+				producto.setNombre(resultSet.getString(2));
+				producto.setPrecio(resultSet.getDouble(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return producto;
+	}*/
+
+	
+	
+	
+	@Override
+	public void update(Factura factura) {
+		//DELETE FROM `facturacion`.`productos` WHERE `id`='4';
+		//UPDATE `facturacion`.`productos` SET `id`='4', `nombre`='f', `precio`='27' WHERE `id`='3';
+		/*if(cliente!=null){
+			int id = cliente.getId();
+			this.delete(id);
+			Connection con = JDBCHelper.getConnection();
+			try {
+				String strSQL = "INSERT INTO `facturacion`.`factura` (`nombre`, `telefono`, `cif`) VALUES (?,?,?)";
+				PreparedStatement statement = con.prepareStatement(strSQL);
+				statement.setInt(1, id);
+				statement.setString(2, cliente.getNombre());
+				statement.setString(3, cliente.getTelefono());
+				statement.setString(3, cliente.getCIF());
+				System.out.println(strSQL);
+				statement.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}*/
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		if(this.read(id)!=null){
+			Connection con = JDBCHelper.getConnection();
+			try {
+				String strSQL = "DELETE FROM `facturacion`.`clientes` WHERE `id`=?;";
+				PreparedStatement statement = con.prepareStatement(strSQL);
+				statement.setInt(1, id);
+				System.out.println(strSQL);
+				statement.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public List<Factura> getAll() {
+		Connection con = JDBCHelper.getConnection();
+		Cliente cliente = null;
+		List<Factura> clientes = new ArrayList<Factura>();
+		/*try {
+			
+			Statement statement = con.createStatement();
+			ResultSet resultSet = statement.executeQuery("select * from clientes");
+			
+			
+			while(resultSet.next()){
+				cliente=new Cliente();
+				cliente.setId(resultSet.getInt(1));
+				cliente.setNombre(resultSet.getString(2));
+				cliente.setTelefono(resultSet.getString(3));
+				cliente.setCIF(resultSet.getString(4));
+				clientes.add(cliente);				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		return clientes;
+	}
+
+	
+
+}

@@ -1,0 +1,5 @@
+package com.jdlsoft.facturasBueno.servlets;
+
+public @interface Autowired {
+
+}

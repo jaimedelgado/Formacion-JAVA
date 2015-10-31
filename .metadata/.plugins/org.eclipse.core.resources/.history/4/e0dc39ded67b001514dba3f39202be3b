@@ -1,0 +1,30 @@
+package com.jdlsoft.gestionCoches.daos.test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Date;
+import java.util.Calendar;
+
+import org.junit.Test;
+
+import com.jdlsoft.gestionCoches.domain.Coche;
+
+public class CocheDAOTest {
+
+	@Test
+	public void createTest() {
+		Coche coche = new Coche();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2014,1,6);
+		coche.setFechaMatriculacion(new Date(calendar.getTimeInMillis()));
+		coche.setNumeroBastidor("df14fdf54gh");
+		coche.setMatricula("6564DFG");
+		coche.setMarca("Opel");
+		coche.setModelo("Corsa");
+		coche.setNumeroPuertas(5);
+		coche.setTipoMotor("Diesel");
+		coche.setSiniestrado(false);
+		
+	}
+
+}

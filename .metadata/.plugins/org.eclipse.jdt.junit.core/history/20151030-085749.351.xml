@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ProductoDAOTest" project="gestionProductosSpring" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.crismirjai.gestionproductosspring.model.test.ProductoDAOTest" time="3.712">
+    <testcase name="guardarProductoTest" classname="com.crismirjai.gestionproductosspring.model.test.ProductoDAOTest" time="3.707"/>
+    <testcase name="getProductoByIdTest" classname="com.crismirjai.gestionproductosspring.model.test.ProductoDAOTest" time="0.002"/>
+    <testcase name="getProductosTest" classname="com.crismirjai.gestionproductosspring.model.test.ProductoDAOTest" time="0.003"/>
+  </testsuite>
+</testrun>

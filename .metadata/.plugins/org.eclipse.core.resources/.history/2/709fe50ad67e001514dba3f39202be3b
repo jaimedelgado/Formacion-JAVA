@@ -1,0 +1,5 @@
+package com.crismirjai.gestionproductosspring.exceptions;
+
+public class DAOException extends Exception {
+
+}

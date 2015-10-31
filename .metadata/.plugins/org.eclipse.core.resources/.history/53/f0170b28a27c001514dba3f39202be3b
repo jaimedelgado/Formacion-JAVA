@@ -1,0 +1,155 @@
+package com.jdlsoft.juegosj2ee.model;
+
+import java.util.Random;
+
+
+public class MasterMind1 extends Juego {
+
+	// Variables de instancia necesarias
+	public static final String[] colores = {"ROJO", "AZUL", "VERDE", "AMARILLO", "NARANJA", "ROSA", "MARRON", "GRIS"};
+	private String[] combinacion;
+	private String[] jugada;
+	public static final int NUMERO_MAXIMO_JUGADAS = 10;
+	
+	public MasterMind1() {
+		super();
+		this.numeroJugada = 10;
+	}
+	
+
+	public String[] getClave() {
+		String[] combinacion = {"", "", "", ""};
+		
+		for (int i = 0; i < combinacion.length; i ++) {
+			combinacion[i] = colores[getNumeroAleatorio()];
+		}
+		
+		return combinacion;
+	}
+	
+	public int getNumeroAleatorio() {
+		Random rnd = new Random();
+		rnd.setSeed(Double.doubleToLongBits(Math.random()));
+		
+		return (int) (rnd.nextDouble()*7);
+	}
+	
+	public String imprimirClave (String[] clave){
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < clave.length; i++) {
+			sb.append(clave[i]).append(" ");
+		}
+		
+		return sb.toString();
+	}
+	
+	@Override
+	public void reset() {
+		super.reset();
+		this.numeroJugada = 10;
+	}
+	
+	@Override
+	public void start() {
+		this.estado = Estado.RUNNING;
+		
+	}
+
+	@Override
+	public String play(String jugada) {
+		
+		this.jugada = jugada.split(" ");
+		String clave[] = {"","","",""};
+		String jugada2[] = {"","","",""};
+		int contadorNegras = 0;
+		int contadorBlancas = 0;
+		
+		if (this.numeroJugada == MasterMind1.NUMERO_MAXIMO_JUGADAS) {
+			this.combinacion = getClave();
+		}
+		
+		for (int i = 0; i < combinacion.length; i++) {
+			clave[i] = combinacion[i];
+		}
+		
+		for (int i = 0; i < this.jugada.length; i++) {
+			jugada2[i] = this.jugada[i];
+		}
+		
+		for (int i = 0; i < clave.length; i++) {
+			// Negras
+			if (clave[i].equals(jugada2[i])) {
+				clave[i] = "*";
+				contadorNegras++;
+				
+			}
+			
+			for (int j = 0; j < clave.length; j++) {
+				// Blancas
+				if (clave[i].equals(jugada2[j])) {
+					jugada2[j] = "-";
+					contadorBlancas++;
+					break;
+				}
+			}
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Numero de negras: ").append(contadorNegras);
+		sb.append("\nNumero de blancas: ").append(contadorBlancas);
+		sb.append("\n");
+		sb.append("Combinacion: ").append(getChivato());
+		sb.append("\n");
+		sb.append("Original: ").append(imprimirClave (this.jugada));
+		sb.append("\n");
+		sb.append ("Prueba: ").append(imprimirClave (jugada2));
+		sb.append("\n");
+		
+		this.numeroJugada--;
+		
+		if (contadorNegras == 4) {
+			this.estado = Estado.WIN;
+		} else {
+			if (this.numeroJugada == 0) {
+				this.estado = Estado.LOSE;
+			}
+		}
+		
+		return  sb.toString();
+	}
+
+	@Override
+	public String getHelp() {
+		// TODO para el jueves
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\nAYUDA MASTERMIND\n\n");
+		sb.append("Colores disponibles ").append(imprimirClave(colores));
+		sb.append("\n\nCodificacion de aciertos:");
+		sb.append("\nNegras: has acertado el color y la posicion");
+		sb.append("\nBlancas: has acertado el color pero no la posicion\n");
+		sb.append("\nDispones de 10 intentos");
+
+		return sb.toString();
+	}
+	
+	@Override
+	public Estado getEstado() {
+		return this.estado;
+	}
+	
+	@Override
+	public String getVendor() {
+		return "NM STUDIOS GAME DIVISION";
+	}
+
+	@Override
+	public String getCredits() {
+		return "Pepin Galvez Ridruejo";
+	}
+
+	@Override
+	public String getChivato() {
+		return imprimirClave(combinacion);
+	}
+}

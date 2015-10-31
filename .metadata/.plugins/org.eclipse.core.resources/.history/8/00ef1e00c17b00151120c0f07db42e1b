@@ -1,0 +1,23 @@
+package com.jdlsoft.gestionCoches.utils.test;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+
+import com.jdlsoft.gestionCoches.utils.GCDbQuery;
+
+public class GCDbQueryTest {
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void generarQuery() {
+		Map<String, Object> filtros = new HashMap<String, Object>();
+		filtros.put(GCDbQuery.COCHES_HIBRIDOS, "CUALQUIERA");
+		filtros.put(GCDbQuery.COCHES_SINIESTRADOS, "CUALQUIERA");
+		filtros.put(GCDbQuery.COCHES_FECHA_INICIO, new java.sql.Date(2000,1,1));
+	}
+
+}

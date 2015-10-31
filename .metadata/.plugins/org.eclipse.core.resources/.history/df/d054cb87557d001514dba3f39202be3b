@@ -1,0 +1,8 @@
+package com.jdlsoft.facturasBueno.dao;
+
+public class Snippet {
+	public static void main(String[] args) {
+		facturasJ2EEMejorado
+	}
+}
+

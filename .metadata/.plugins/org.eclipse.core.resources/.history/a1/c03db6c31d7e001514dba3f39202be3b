@@ -1,0 +1,5 @@
+package com.jdlsoft.springmvc.services.impl;
+
+public class ClienteDAO {
+
+}

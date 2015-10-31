@@ -1,0 +1,10 @@
+package com.jdlsoft.cajondesastre.pruebas;
+
+public class Bar {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

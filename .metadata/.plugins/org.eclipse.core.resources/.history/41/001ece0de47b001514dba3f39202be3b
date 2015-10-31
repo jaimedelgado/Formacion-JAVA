@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ALTA DEL COCHE</title>
+	</head>
+	<body>
+		<h2>Alta del coche</h2>
+		
+		<form action="SvAltaCoche">
+			<table>
+				<tr>
+					<td>Tipo de motor: <input type="checkbox" name="diesel" value="Diesel">Diesel <input type="checkbox" name="gasolina" value="Gasolina">Gasolina <input type="checkbox" name="hibrido" value="Hibrido">Híbrido <input type="checkbox" name="todos" value="Todos">Todos</td>
+				</tr>
+				<tr>
+					<td>Siniestrado <input type="checkbox" name="siniestrado" value="1">
+				</tr>
+				<tr>
+					<td>Por fechas <input type="text" name="fecha1"/> <input type="text" name="fecha2"/>
+				</tr>
+				<tr>
+					<td><input type="submit" name="submit"/></td>
+				</tr>		
+			</table>
+		
+		
+		</form>
+		<br/>
+		<a href="index.jsp">index</a>
+	</body>
+</html>

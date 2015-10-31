@@ -1,0 +1,59 @@
+package com.jdlsoft.facturasBueno.servlets;
+
+public class Cliente {
+	private int id;
+	private String nombre;
+	private String telefono;
+	private String CIF;
+	
+	public Cliente(){
+		
+	}
+
+	public Cliente(int id, String nombre, String telefono, String CIF) {
+		this.id = id;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.CIF = CIF;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public String getCIF() {
+		return CIF;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public void setCIF(String CIF) {
+		this.CIF = CIF;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", telefono="
+				+ telefono + ", CIF=" + CIF + "]";
+	}
+	
+	
+}

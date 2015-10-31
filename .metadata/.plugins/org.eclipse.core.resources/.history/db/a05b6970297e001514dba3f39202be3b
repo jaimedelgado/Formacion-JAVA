@@ -1,0 +1,5 @@
+package com.crismirjai.gestionproductosspring.model;
+
+public class Producto {
+
+}

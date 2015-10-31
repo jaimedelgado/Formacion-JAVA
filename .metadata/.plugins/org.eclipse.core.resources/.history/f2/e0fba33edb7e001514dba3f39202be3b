@@ -1,0 +1,5 @@
+package com.crismirjai.gestionproductosspring.utils;
+
+public class GPSDbQuery {
+
+}

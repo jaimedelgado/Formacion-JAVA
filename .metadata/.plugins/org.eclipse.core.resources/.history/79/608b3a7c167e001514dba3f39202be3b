@@ -1,0 +1,12 @@
+package com.jdlsoft.springmvc.controllers;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class SpringController {
+	
+	public ModelAndView helloWorld(){
+		Cliente cliente = new Cliente();
+		
+	}
+}

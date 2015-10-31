@@ -1,0 +1,138 @@
+package com.crismirjai.gestionproductosspring.controllers;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.crismirjai.gestionproductosspring.domain.Producto;
+import com.crismirjai.gestionproductosspring.exceptions.DAOException;
+import com.crismirjai.gestionproductosspring.services.IProductoDAO;
+
+/**
+ * 29/10/2015
+ * 
+ * @author Miriam del Río
+ * @author Jaime Delgado
+ * @author Christian Sánchez Clase que implementa el Spring Controller MVC
+ */
+@Controller
+public class SpringController {
+	@Autowired
+	private IProductoDAO productoDAO; // Spring ya se encarga de inyectar la
+										// dependencia (implementacion)
+
+	/**
+	 * Método que devuelve el recurso de alta.jsp
+	 * 
+	 * @return Recurso alta.jsp
+	 */
+	@RequestMapping("/alta")
+	public String alta() {
+		return "alta";
+	}
+
+	/**
+	 * Método que devuelve el recurso de bienvenida.jsp
+	 * 
+	 * @return Recurso bienvenida.jsp
+	 */
+	@RequestMapping("/")
+	public String bienvenida() {
+		return "bienvenida";
+	}
+
+	/**
+	 * Método que devuelve el recurso buscarproducto.jsp
+	 * 
+	 * @return Recurso buscarproducto.jsp
+	 */
+	@RequestMapping("/buscarproducto")
+	public String buscarproducto() {
+		return "buscarproducto";
+	}
+
+	/**
+	 * Método que recoge los parámetros del formulario y crea un producto con la
+	 * información necesaria
+	 * 
+	 * @param codigo
+	 *            Código del producto
+	 * @param nombre
+	 *            Nombre del producto
+	 * @param fechaAlta
+	 *            Fecha en la que se ha dado de alta el producto
+	 * @param precio
+	 *            Precio del producto
+	 * @param stock
+	 *            Número de productos en stock
+	 * @return ModelAndView con la información necesaria
+	 */
+	@RequestMapping("/altaProducto")
+	public ModelAndView altaProducto(
+			@RequestParam(value = "codigo") String codigo,
+			@RequestParam(value = "nombre") String nombre,
+			@RequestParam(value = "fecha") String fechaAlta,
+			@RequestParam(value = "precio") Double precio,
+			@RequestParam(value = "stock") Integer stock) {
+		ModelAndView mv = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha = null;
+		try {
+			fecha = sdf.parse(fechaAlta);
+			if (productoDAO.getProductoById(codigo) == null) {
+				Producto producto = new Producto(codigo, nombre, fecha, precio,
+						stock);
+				productoDAO.guardarProducto(producto);
+				mv = new ModelAndView("listado", "productos",
+						productoDAO.getProductos());
+			}
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return mv;
+	}
+
+	/**
+	 * Método que lista los productos de la base de datos y se los pasa al
+	 * recurso listado.jsp
+	 * 
+	 * @return ModelAndView con la información necesaria
+	 */
+	@RequestMapping("/listado")
+	public ModelAndView listadoProductos() {
+
+		ModelAndView mv = new ModelAndView("listado", "productos",
+				productoDAO.getProductos());
+		return mv;
+	}
+
+	/**
+	 * Método que busca el producto en la base de datos y se lo manda al recurso
+	 * buscarproducto.jsp
+	 * 
+	 * @param codigo
+	 *            Código del producto a buscar
+	 * @return ModelAndView con la información necesaria
+	 */
+	@RequestMapping("/buscarProducto")
+	public ModelAndView buscarProductos(
+			@RequestParam(value = "codigo") String codigo) {
+		ModelAndView mv = null;
+		Producto p = productoDAO.getProductoById(codigo);
+		System.out.println("El producto es: " + p);
+
+		mv = new ModelAndView("buscarproducto", "producto", p);
+
+		return mv;
+	}
+}

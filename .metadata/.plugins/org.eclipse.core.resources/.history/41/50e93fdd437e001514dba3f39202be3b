@@ -1,0 +1,88 @@
+package com.crismirjai.gestionproductosspring.domain;
+
+import java.util.Date;
+/**
+ * 29/10/2015
+ * @author Miriam del Río 
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ * Clase que modeliza un producto con código, nombre, fecha de alta del producto, precio y stock.
+ */
+public class Producto {
+	private String codigo;
+	private String nombre;
+	private Date fechaAlta;
+	private double precio;
+	private int stock;
+	/**
+	 * Constructor sin argumentos
+	 */
+	public Producto(){
+		
+	}
+/**
+ * Constructor con todos los parámetros
+ * @param codigo Código del producto
+ * @param nombre Nombre del producto
+ * @param fechaAlta Fecha en la que se ha dado de alta el producto
+ * @param precio Precio del producto
+ * @param stock Número de productos en stock
+ */
+	public Producto(String codigo, String nombre, Date fechaAlta,
+			double precio, int stock) {
+		super();
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.fechaAlta = fechaAlta;
+		this.precio = precio;
+		this.stock = stock;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	@Override
+	public String toString() {
+		return "Producto [codigo=" + codigo + ", nombre=" + nombre
+				+ ", fechaAlta=" + fechaAlta + ", precio=" + precio
+				+ ", stock=" + stock + "]";
+	}
+	
+}

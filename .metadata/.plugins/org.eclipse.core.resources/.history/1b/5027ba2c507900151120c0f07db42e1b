@@ -1,0 +1,116 @@
+package com.jdlsoft.facturasj2eemejorado.servlets;
+
+import java.io.IOException;
+import java.util.Date;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.jdlsoft.facturasj2eemejorado.dao.DAO;
+import com.jdlsoft.facturasj2eemejorado.dao.impl.ClienteDAO;
+import com.jdlsoft.facturasj2eemejorado.dao.impl.FacturaDAO;
+import com.jdlsoft.facturasj2eemejorado.model.Cliente;
+import com.jdlsoft.facturasj2eemejorado.model.Factura;
+
+@WebServlet("/SvAltaFactura")
+public class SvAltaFactura extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+System.out.println("Funciona!");
+		
+		DAO<Factura> facturaDAO = new FacturaDAO();  // Declaramos "facturaDAO"
+		DAO<Cliente> clienteDAO = new ClienteDAO();
+		Cliente cliente = null;
+		
+		String strCantidad = request.getParameter("cantidad");
+		String strNombre = request.getParameter("nombre");
+		String strPrecio = request.getParameter("precio");
+		String strImporte = request.getParameter("importe");
+		String strCodigoFactura = request.getParameter("codigoFactura");
+		String strObservaciones = request.getParameter("observaciones");
+		String strIdCliente = request.getParameter("idCliente");
+
+
+		boolean ok = true;
+		String recurso = "WEB-INF/altaFactura.jsp";
+		int cantidad = 0;
+		int precio = 0;
+		int importe = 0;
+		int codigoFactura = 0;
+		int idCliente = 0;
+		String error = "";
+		
+		try{
+			cantidad = Integer.parseInt(strCantidad);
+		} catch (NumberFormatException e){
+			ok = false;
+			error = error + "La cantidad tiene que ser un número <br/>";
+		}
+		
+		try{
+			precio = Integer.parseInt(strPrecio);
+		} catch (NumberFormatException e){
+			ok = false;
+			error = error + "El precio tiene que ser un número <br/>";
+
+		}
+		
+		try{
+			importe = Integer.parseInt(strImporte);
+			cliente = clienteDAO.read(idCliente);
+			if(cliente == null){
+				error = error + "La id del cliente no existe";
+				ok = false;
+		
+			}
+		} catch (NumberFormatException e){
+			ok = false;
+			error = error + "El id del cliente tiene que ser un número <br/>";
+
+		}
+		
+		
+		try{
+			codigoFactura = Integer.parseInt(strCodigoFactura);
+		} catch (NumberFormatException e){
+			ok = false;
+			error = error + "El código de la factura tiene que ser un número <br/>";
+		}
+		
+		try{
+			idCliente = Integer.parseInt(strIdCliente);
+		} catch (NumberFormatException e){
+			ok = false;
+			error = error + "La cantidad tiene que ser un número <br/>";
+		}
+		
+		
+		
+		if (strNombre == ""){
+			ok = false;
+		}
+		
+		if (!ok){
+			recurso = "WEB-INF/facturaIncorrecta.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(recurso);
+			request.setAttribute("error", error);
+			System.out.println(ok);
+			rd.forward(request, response);
+		}else{
+			facturaDAO.create(new Factura(codigoFactura, new Date(), strObservaciones, cliente));
+			System.out.println(facturaDAO.getAll());
+			recurso = "WEB-INF/facturaCorrecta.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(recurso);
+			System.out.println(ok);
+			rd.forward(request, response);
+		} 
+			
+	}
+
+}

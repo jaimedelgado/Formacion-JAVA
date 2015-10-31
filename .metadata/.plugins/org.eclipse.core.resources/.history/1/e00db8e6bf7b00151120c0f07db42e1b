@@ -1,0 +1,14 @@
+package com.jdlsoft.gestionCoches.utils.test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class GCDbQueryTest {
+
+	@Test
+	public void generarQuery() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,44 @@
+package com.jdlsoft.facturasj2eemejorado.listeners;
+
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+import com.jdlsoft.facturasj2eemejorado.dao.DAO;
+import com.jdlsoft.facturasj2eemejorado.dao.impl.ClienteDAO;
+import com.jdlsoft.facturasj2eemejorado.dao.impl.ProductoDAO;
+import com.jdlsoft.facturasj2eemejorado.model.Cliente;
+import com.jdlsoft.facturasj2eemejorado.model.Producto;
+
+@WebListener
+public class InicializationListener implements ServletContextListener {
+
+ 
+    public void contextInitialized(ServletContextEvent sce)  { 
+    
+    	DAO<Cliente> clienteDAO = new ClienteDAO();
+    	List<Cliente> appClientes = clienteDAO.getAll();
+    	
+    	ServletContext scClientes = sce.getServletContext();
+    	
+    	scClientes.setAttribute("listaClientes", appClientes);
+    	
+    	DAO<Producto> productoDAO = new ProductoDAO();
+    	List<Producto> appProductos = productoDAO.getAll();
+    	
+    	ServletContext scProductos = sce.getServletContext();
+    	
+    	scProductos.setAttribute("listaProductos", appProductos);
+    	
+    	
+    }
+
+	
+    public void contextDestroyed(ServletContextEvent arg0)  { 
+         
+    }
+	
+}

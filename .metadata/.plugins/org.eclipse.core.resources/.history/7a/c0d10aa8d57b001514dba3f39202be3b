@@ -1,0 +1,5 @@
+package com.jdlsoft.gestionCoches.daos.test;
+
+public class CocheDAOTest {
+
+}

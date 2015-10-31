@@ -1,0 +1,36 @@
+package com.jdlsoft.gestionCoches.daos.test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Date;
+import java.util.Calendar;
+
+import org.junit.Test;
+
+import com.jdlsoft.gestionCoches.daos.CocheDAO;
+import com.jdlsoft.gestionCoches.domain.Coche;
+import com.jdlsoft.gestionCoches.exceptions.DAOException;
+import com.jdlsoft.gestionCoches.interfaces.ICocheDAO;
+
+public class CocheDAOTest {
+
+	@Test
+	public void createTest() throws DAOException {
+		Coche coche = new Coche();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2014,1,6);
+		coche.setFechaMatriculacion(new Date(calendar.getTimeInMillis()));
+		coche.setNumeroBastidor("df14fdf54gh");
+		coche.setMatricula("6564DFG");
+		coche.setMarca("Opel");
+		coche.setModelo("Corsa");
+		coche.setNumeroPuertas(5);
+		coche.setTipoMotor("Diesel");
+		coche.setSiniestrado(false);
+		ICocheDAO cocheDAO = new CocheDAO();
+		cocheDAO.create(coche);
+		//cocheDAO.getAll();
+		assertNotEquals(0, cocheDAO.getAll().size());
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.jdlsoft.gestionCoches.exceptions;
+
+public class DAOException extends RunTimeException{
+
+}

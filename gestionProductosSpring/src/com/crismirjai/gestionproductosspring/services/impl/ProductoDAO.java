@@ -1,0 +1,132 @@
+package com.crismirjai.gestionproductosspring.services.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.crismirjai.gestionproductosspring.domain.Producto;
+import com.crismirjai.gestionproductosspring.helpers.JDBCHelper;
+import com.crismirjai.gestionproductosspring.services.IProductoDAO;
+import com.crismirjai.gestionproductosspring.utils.GPSDbQuery;
+
+/**
+ * 29/10/2015 Clase que implementa todos los servicios de la interfaz
+ * IProductoDAO. Ofrece funciones para guardar, listar y leer de una base de
+ * datos relacional SQL
+ * 
+ * @author Miriam del Río
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ * 
+ */
+public class ProductoDAO implements IProductoDAO {
+
+	/**
+	 * Este método devuelve el producto de la base de datos cuyo código coincida
+	 * con el parámetro
+	 * 
+	 * @param id
+	 *            Código del producto a buscar
+	 * @return Producto buscado
+	 */
+
+	@Override
+	public Producto getProductoById(String id) {
+		Connection con = JDBCHelper.getConnection();
+		final String selectSQL = GPSDbQuery.PRODUCTOS_BUSCAR_POR_CODIGO;
+		Producto producto = null;
+		try {
+			PreparedStatement preparedStatement = con
+					.prepareStatement(selectSQL);
+			preparedStatement.setString(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				producto = new Producto();
+				producto.setCodigo(resultSet.getString(1));
+				producto.setNombre(resultSet.getString(2));
+				producto.setFechaAlta(resultSet.getDate(3));
+				producto.setPrecio(resultSet.getDouble(4));
+				producto.setStock(resultSet.getInt(5));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return producto;
+	}
+
+	/**
+	 * Este método devuelve la lista de productos de la base de datos
+	 * 
+	 * @return Lista de productos
+	 */
+	@Override
+	public List<Producto> getProductos() {
+		Connection con = JDBCHelper.getConnection();
+		Producto producto = null;
+		List<Producto> productos = new ArrayList<Producto>();
+		try {
+
+			Statement statement = con.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery(GPSDbQuery.PRODUCTOS_BUSCAR_TODOS);
+
+			while (resultSet.next()) {
+				producto = new Producto();
+				producto.setCodigo(resultSet.getString(1));
+				producto.setNombre(resultSet.getString(2));
+				producto.setFechaAlta(resultSet.getDate(3));
+				producto.setPrecio(resultSet.getDouble(4));
+				producto.setStock(resultSet.getInt(5));
+				productos.add(producto);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return productos;
+	}
+
+	/**
+	 * Este método guarda un producto en la base de datos
+	 * 
+	 * @param producto
+	 *            Producto a guardar en la base de datos
+	 */
+	@Override
+	public void guardarProducto(Producto producto) {
+		if (producto != null) {
+			Connection con = JDBCHelper.getConnection();
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date fecha = producto.getFechaAlta();
+				String strfecha = sdf.format(fecha);
+				String strSQL = GPSDbQuery.PRODUCTOS_CREAR;
+				PreparedStatement preparedstatement = con
+						.prepareStatement(strSQL);
+				preparedstatement.setString(1, producto.getCodigo());
+				preparedstatement.setString(2, producto.getNombre());
+				preparedstatement.setString(3, strfecha);
+				preparedstatement.setDouble(4, producto.getPrecio());
+				preparedstatement.setInt(5, producto.getStock());
+
+				System.out.println(strSQL);
+				preparedstatement.executeUpdate();
+				con.commit();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+}

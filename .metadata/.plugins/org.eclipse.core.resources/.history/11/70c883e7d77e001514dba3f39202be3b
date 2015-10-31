@@ -1,0 +1,31 @@
+package com.crismirjai.gestionproductosspring.services;
+
+import java.util.List;
+
+import com.crismirjai.gestionproductosspring.domain.Producto;
+import com.crismirjai.gestionproductosspring.exceptions.DAOException;
+/**
+ * 29/10/2015
+ * @author Miriam del Río 
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ * Interfaz que ofrece servicios para crear, buscar y listar productos
+ */
+public interface IProductoDAO {
+	/**
+	 * Este método devuelve el producto cuyo código coincida con el parámetro
+	 * @param id Código del producto a buscar 
+	 * @return Producto buscado
+	 */
+	public Producto getProductoById(String id) throws DAOException;
+	/**
+	 * Este método devuelve la lista de productos
+	 * @return Lista de productos
+	 */
+	public List<Producto> getProductos()throws DAOException;
+	/**
+	 * Este método guarda un producto 
+	 * @param producto Producto a guardar
+	 */
+	public void guardarProducto(Producto producto)throws DAOException;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasBueno.model.Cliente"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasBueno.model.Factura"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasBueno.model.Producto"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.model.LineaDetalleFactura"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.model.Factura"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.dao.impl.FacturaDAO"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.dao.DAO"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.dao.impl.ClienteDAO"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.model.Cliente"/>
+<fullyQualifiedTypeName name="com.sun.xml.internal.bind.v2.schemagen.xmlschema.List"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.model.Producto"/>
+<fullyQualifiedTypeName name="com.jdlsoft.facturasj2eemejorado.dao.impl.ProductoDAO"/>
+<fullyQualifiedTypeName name="com.jdlsoft.gestionCoches.exceptions.DAOException"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.jdlsoft.gestionCoches.utils.GCDbQuery"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="com.jdlsoft.gestionCoches.domain.Coche"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="com.jdlsoft.gestionCoches.utils.GCDataConnection"/>
+</qualifiedTypeNameHistroy>

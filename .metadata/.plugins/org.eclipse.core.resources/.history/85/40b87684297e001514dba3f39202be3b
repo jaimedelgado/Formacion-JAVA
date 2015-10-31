@@ -1,0 +1,14 @@
+package com.crismirjai.gestionproductosspring.model;
+
+public class Producto {
+	private String codigo;
+	private String nombre;
+	private Date fechaAlta;
+	private double precio;
+	private int stock;
+	
+	public Producto(){
+		
+	}
+	
+}

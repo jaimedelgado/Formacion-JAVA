@@ -1,0 +1,34 @@
+package com.crismirjai.gestionproductosspring.model.test;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.Test;
+
+import com.crismirjai.gestionproductosspring.model.Producto;
+import com.crismirjai.gestionproductosspring.services.IProductoDAO;
+import com.crismirjai.gestionproductosspring.services.impl.ProductoDAO;
+
+public class ProductoDAOTest {
+
+	@Test
+	public void getProductoByIdTest() {
+		IProductoDAO ipd = new ProductoDAO();
+		Producto producto = ipd.getProductoById("100");
+		System.out.println(producto);
+		assertNotNull(producto);
+	}
+	@Test
+	public void getProductosTest(){
+		IProductoDAO ipd = new ProductoDAO();
+		List<Producto> productos = ipd.getProductos();
+		assertNotNull(productos);
+		assertEquals(productos.size(), 3);
+	}
+	@Test
+	public void guardarProductoTest(){
+		IProductoDAO ipd = new ProductoDAO();
+		ipd.guardarProducto(new Producto());
+	}
+}

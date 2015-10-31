@@ -1,0 +1,11 @@
+package com.jdlsoft.gestionCoches.utils;
+
+public class GCDbQuery {
+
+	private GCDbQuery(){
+		
+	}
+	
+	public final static String ALL__EVENTS = "select....";
+	
+}

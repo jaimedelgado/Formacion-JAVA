@@ -1,0 +1,31 @@
+package com.jdlsoft.servlets;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+@WebServlet("/Sv1")
+public class Sv1 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	//private List<String> nombres = new ArrayList<String>();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nombre = request.getParameter("nombre");
+		System.out.println(nombre);
+		
+		HttpSession session = request.getSession();
+		
+		nombres.add(nombre);
+		request.setAttribute("nombres", nombres);
+		request.getRequestDispatcher("respuesta.jsp").forward(request, response);;
+	}
+
+}

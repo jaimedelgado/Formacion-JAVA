@@ -1,0 +1,94 @@
+package com.jdlsoft.juegosj2ee.servlets;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.jdlsoft.juegosj2ee.model.Jugable;
+import com.jdlsoft.juegosj2ee.model.MasterMind1;
+import com.jdlsoft.juegosj2ee.model.MasterMind3;
+import com.jdlsoft.juegosj2ee.model.MasterMind5;
+
+@WebServlet("/SvControladorJuego")
+public class SvControladorJuego extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Jugable juego = (Jugable) session.getAttribute("juego");
+		if(juego == null){
+			juego = new MasterMind1();
+			session.setAttribute("juego", juego);
+		}
+		
+		String boton = request.getParameter("boton");
+		
+		String jugada = request.getParameter("jugada");
+		
+		if (session.getAttribute("jugadas") == null) {
+			List<String> jugadas = new ArrayList<String>();
+			jugadas.add(jugada);
+			
+			session.setAttribute("jugadas", jugadas);
+		} else {
+			List<String> jugadas = (List<String>) session.getAttribute("jugadas");
+			jugadas.add("jugadas");
+		}
+		
+		if (session.getAttribute("respuestas") == null) {
+			List<String> jugadas = new ArrayList<String>();
+			jugadas.add(jugada);
+			
+			session.setAttribute("respuestas", jugadas);
+		} else {
+			List<String> jugadas = (List<String>) session.getAttribute("jugadas");
+			jugadas.add("jugadas");
+		}
+		
+		String respuesta = "";
+		int numeroBlancas = 0;
+		int numeroNegras = 0;
+		
+		
+		System.out.println("Boton pulsado: " + boton);
+		switch(boton){
+			case "start": 	juego.start();
+							break;
+			case "reset":	juego.reset();
+							break;
+			case "pause":	juego.pause();
+							break;
+			case "resume":	juego.resume();
+							break;
+			case "play":	respuesta = juego.play(jugada);
+							
+							String parse = "Numero de negras: ";
+							int pos = respuesta.indexOf(parse) + parse.length();
+							
+							numeroNegras = Integer.parseInt(respuesta.substring(pos, pos +1 ));
+							
+							parse = "Numero de blancas: ";
+							pos = respuesta.indexOf(parse) + parse.length();
+							numeroBlancas = Integer.parseInt(respuesta.substring(pos, pos +1 ));
+							
+							
+							
+							break;
+		}
+		System.out.println("Estado del juego: " + juego.getEstado());
+		
+		// AQUÍ TODA LA LÓGICA DE CONTROL
+		
+		// AQUÍ INVOCAMOS LA VISTA
+		request.getRequestDispatcher("consola.jsp").forward(request, response);
+	}
+	
+}

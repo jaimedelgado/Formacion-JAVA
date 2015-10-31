@@ -1,0 +1,7 @@
+package com.jdlsoft.gestionCoches.utils;
+
+public class GCDbQuery {
+
+	public final static String sdfsdff = "";
+	
+}

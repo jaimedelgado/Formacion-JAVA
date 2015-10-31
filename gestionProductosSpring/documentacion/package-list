@@ -1,0 +1,7 @@
+com.crismirjai.gestionproductosspring.controllers
+com.crismirjai.gestionproductosspring.domain
+com.crismirjai.gestionproductosspring.exceptions
+com.crismirjai.gestionproductosspring.helpers
+com.crismirjai.gestionproductosspring.model.test
+com.crismirjai.gestionproductosspring.services
+com.crismirjai.gestionproductosspring.services.impl

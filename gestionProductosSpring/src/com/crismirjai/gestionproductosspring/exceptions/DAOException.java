@@ -1,0 +1,38 @@
+package com.crismirjai.gestionproductosspring.exceptions;
+
+/**
+ * 29/10/2015 Excepción que se lanza cuando se produce un fallo al usar la base
+ * de datos de productos en tiempo de ejecución
+ * 
+ * @author Miriam del Río
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ * 
+ * 
+ */
+public class DAOException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructora con mensaje
+	 * 
+	 * @param message
+	 *            Mensaje de error
+	 */
+	public DAOException(String message) {
+		super(message);
+	}
+
+	/**
+	 * Constructora con mensaje y causa del error
+	 * 
+	 * @param message
+	 *            Mensaje de error
+	 * @param cause
+	 *            Causa del error
+	 */
+	public DAOException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+}

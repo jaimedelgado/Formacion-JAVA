@@ -1,0 +1,7 @@
+package com.crismirjai.gestionproductosspring.utils;
+
+public class GPSDbQuery {
+
+	public static final String PRODUCTOS_TODOS = "SELECT * FROM PRODUCTO WHERE CODIGO=?";
+
+}

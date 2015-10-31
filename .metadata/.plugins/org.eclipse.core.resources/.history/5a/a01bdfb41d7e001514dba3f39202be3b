@@ -1,0 +1,7 @@
+package com.jdlsoft.springmvc.services;
+
+public interface IClienteDAO {
+	public Cliente getclienteById(int id){
+		
+	}
+}

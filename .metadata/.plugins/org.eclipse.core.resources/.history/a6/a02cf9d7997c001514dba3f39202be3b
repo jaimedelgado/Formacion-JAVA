@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Juegos</title>
+</head>
+<body>
+	<h2>Juegos</h2>
+	<form action="SvControladorJuego">
+		<input type="text" name="jugada"/>
+		<input type="submit" name="boton" value="start"/>
+		<input type="submit" name="boton" value="play" ${hplay} }/>
+		<input type="submit" name="boton" value="reset"/>
+		<input type="submit" name="boton" value="pause"/>
+		<input type="submit" name="boton" value="resume"/>
+		<input type="submit" name="boton" value="help"/>
+	</form>
+	
+	
+</body>
+</html>

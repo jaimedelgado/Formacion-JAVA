@@ -1,0 +1,42 @@
+package com.jdlsoft.facturasBueno.dao.impl;
+
+import java.util.List;
+
+import com.jdlsoft.facturasj2eemejorado.dao.IFacturaDAO;
+import com.jdlsoft.facturasj2eemejorado.model.Factura;
+
+public class FacturaDAO4 implements IFacturaDAO{
+
+	@Override
+	public void create(Factura t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Factura read(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update(Factura t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Factura> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

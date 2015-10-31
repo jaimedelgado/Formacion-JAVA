@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CocheDAOTest" project="gestionCoches" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="com.jdlsoft.gestionCoches.daos.test.CocheDAOTest" time="1.217">
+    <testcase name="readTest" classname="com.jdlsoft.gestionCoches.daos.test.CocheDAOTest" time="0.686"/>
+    <testcase name="createTest" classname="com.jdlsoft.gestionCoches.daos.test.CocheDAOTest" time="0.531"/>
+  </testsuite>
+</testrun>

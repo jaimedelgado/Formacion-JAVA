@@ -1,0 +1,21 @@
+package com.crismirjai.gestionproductosspring.model.test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import com.crismirjai.gestionproductosspring.model.Producto;
+import com.crismirjai.gestionproductosspring.services.IProductoDAO;
+import com.crismirjai.gestionproductosspring.services.impl.ProductoDAO;
+
+public class ProductoDAOTest {
+
+	@Test
+	public void getProductoByIdTest() {
+		IProductoDAO ipd = new ProductoDAO();
+		Producto producto = ipd.getProductoById("100");
+		assertNotNull(producto);
+		fail("Not yet implemented");
+	}
+
+}

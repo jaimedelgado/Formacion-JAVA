@@ -1,0 +1,5 @@
+package com.jdlsoft.gestionCoches.interfaces;
+
+public interface ICocheDAO {
+	//Comentado con javadoc
+}

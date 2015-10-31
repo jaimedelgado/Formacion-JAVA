@@ -1,0 +1,5 @@
+package com.crismirjai.gestionproductosspring.services.impl;
+
+public class ProductoDAO {
+
+}

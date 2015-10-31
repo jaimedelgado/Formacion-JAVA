@@ -1,0 +1,24 @@
+package com.jdlsoft.gestionCoches.daos.test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Date;
+import java.util.Calendar;
+
+import org.junit.Test;
+
+import com.jdlsoft.gestionCoches.domain.Coche;
+
+public class CocheDAOTest {
+
+	@Test
+	public void createTest() {
+		Coche coche = new Coche();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2014,1,6);
+		coche.setFechaMatriculacion(new Date(calendar.getTimeInMillis()));
+		
+		
+	}
+
+}

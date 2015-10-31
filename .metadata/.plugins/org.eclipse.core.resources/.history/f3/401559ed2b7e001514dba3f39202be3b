@@ -1,0 +1,98 @@
+package com.crismirjai.gestionproductosspring.services.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.crismirjai.gestionproductosspring.helpers.JDBCHelper;
+import com.crismirjai.gestionproductosspring.model.Producto;
+import com.crismirjai.gestionproductosspring.services.IProductoDAO;
+
+public class ProductoDAO implements IProductoDAO {
+
+	@Override
+	public Producto getProductoById(String id) {
+		Connection con = JDBCHelper.getConnection();
+		final String selectSQL="SELECT * FROM PRODUCTOS WHERE ID=?";
+		Producto producto=null;
+		try {
+			PreparedStatement preparedStatement= con.prepareStatement(selectSQL);
+			preparedStatement.setString(1, id);
+			ResultSet resultSet= preparedStatement.executeQuery();
+			if(resultSet.next()){
+				producto = new Producto();
+				producto.setCodigo(resultSet.getString(1));
+				producto.setNombre(resultSet.getString(2));
+				producto.setFechaAlta(resultSet.getDate(3));
+				producto.setPrecio(resultSet.getDouble(4));
+				producto.setStock(resultSet.getInt(5));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return producto;
+	}
+
+	@Override
+	public List<Producto> getProductos() {
+		Connection con = JDBCHelper.getConnection();
+		Producto producto = null;
+		List<Producto> productos = new ArrayList<Producto>();
+		try {
+			
+			Statement statement = con.createStatement();
+			ResultSet resultSet = statement.executeQuery("select * from producto");
+			
+			
+			while(resultSet.next()){
+				producto = new Producto();
+				producto.setCodigo(resultSet.getString(1));
+				producto.setNombre(resultSet.getString(2));
+				producto.setFechaAlta(resultSet.getDate(3));
+				producto.setPrecio(resultSet.getDouble(4));
+				producto.setStock(resultSet.getInt(5));		
+				productos.add(producto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return productos;
+	}
+
+	@Override
+	public void guardarProducto(Producto producto) {
+		if(producto!=null){
+			Connection con = JDBCHelper.getConnection();
+			try {
+				SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd");
+				String strSQL = "INSERT INTO `producto`.`producto` (`codigo`, `nombre`, `fechaAlta`, `precio`, `stock`) VALUES (?, ?, ?, ?, ?)";
+				PreparedStatement preparedstatement = con.prepareStatement(strSQL);
+				preparedstatement.setString(1, producto.getCodigo());
+				preparedstatement.setString(2, producto.getNombre());
+				preparedstatement.setString(3, new Date(sdf.parse(producto.getFechaAlta().toString())));
+				preparedstatement.setDouble(2, producto.getPrecio());
+				preparedstatement.setString(1, producto.getNombre());
+				preparedstatement.setDouble(2, producto.getPrecio());
+				System.out.println(strSQL);
+				preparedstatement.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+}

@@ -1,0 +1,39 @@
+package com.jdlsoft.gestionCoches.utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class GCDataConnection {
+	
+	// Este es el JDBC Helper, el que conecta Java con la base de datos MySql	
+	
+		private static Connection con;
+		
+		private GCDataConnection(){
+			
+		}
+		
+		public static Connection getConnection(){
+			if (con == null){
+			
+					try {
+						Class.forName("com.mysql.jdbc.Driver");
+						con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestioncoches?user=root&password=1111");
+						//con = DriverManager.getConnection("jdbc:mysql://192.168.200.18:3306/gestioncoches?user=root&password=1111");
+						
+						con.setAutoCommit(false);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+							
+			}
+			return con;
+		}
+}
+
+

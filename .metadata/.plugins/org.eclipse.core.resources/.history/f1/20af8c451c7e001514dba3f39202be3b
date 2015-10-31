@@ -1,0 +1,50 @@
+package com.jdlsoft.springmvc.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.jdlsoft.springmvc.model.Cliente;
+
+@Controller
+public class SpringController {
+	
+	@RequestMapping("/hola")
+	public ModelAndView helloWorld(){
+		Cliente cliente = new Cliente();
+		cliente.setId(250);
+		cliente.setNombre("Pepín");
+		cliente.setApellido1("Gálvez");
+		cliente.setApellido2("Ridruejo");
+		
+		ModelAndView mv = new ModelAndView("pagina1", "cliente", cliente);
+		mv.addObject("dni", "65165145K");
+		
+		return mv;
+	}
+	@RequestMapping("/hola2")
+	public ModelAndView demoParametros(
+			@RequestParam(value = "name", defaultValue = "Guest") String name,
+			@RequestParam(value = "nhijos", required = false) Integer numeroHijos){
+		System.out.println("El nombre es: " + name + " y tiene " + numeroHijos + " hijos");
+		ModelAndView mv = new ModelAndView("pagina2");
+		return mv;
+	}
+	@RequestMapping("/hola3")
+	public String otroMas(){
+		return "pagina3";
+	}
+	@RequestMapping("/hola4")
+	@ResponseBody
+	public String otroMas2(){
+		return "En un lugar de la mancha..";
+	}
+	
+	@RequestMapping("/hola5")
+	@ResponseBody
+	public String otroMas3(){
+		return "<p>Esto parece <b> que funciona </b></p>";
+	}
+}

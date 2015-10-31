@@ -1,0 +1,6 @@
+package com.jdlsoft.gestionCoches.exceptions;
+
+@SuppressWarnings("serial")
+public class DAOException extends RuntimeException{
+
+}

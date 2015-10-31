@@ -1,0 +1,17 @@
+package com.crismirjai.gestionproductosspring.services;
+
+import java.util.List;
+
+import com.crismirjai.gestionproductosspring.domain.Producto;
+/**
+ * 29/10/2015
+ * @author Miriam del Río 
+ * @author Jaime Delgado
+ * @author Christian Sánchez
+ * Interfaz que ofrece servicios para crear, buscar y listar productos
+ */
+public interface IProductoDAO {
+	public Producto getProductoById(String id);
+	public List<Producto> getProductos();
+	public void guardarProducto(Producto producto);
+}

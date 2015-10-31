@@ -1,0 +1,7 @@
+package com.crismirjai.gestionproductosspring.services;
+
+public interface IProductoDAO {
+	public Producto getProductoById(String id);
+	public List<Producto> getProductos();
+	public void guardarProducto(Producto producto);
+}

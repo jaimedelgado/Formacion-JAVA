@@ -1,0 +1,5 @@
+package com.jdlsoft.springmvc.model;
+
+public class Cliente {
+
+}

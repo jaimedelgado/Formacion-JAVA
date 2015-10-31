@@ -1,0 +1,5 @@
+package com.crismirjai.gestionproductosspring.services;
+
+public interface IProductoDAO {
+
+}

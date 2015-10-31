@@ -1,0 +1,18 @@
+package com.jdlsoft.gestionCoches.utils;
+
+public class GCDbQuery {
+
+	private GCDbQuery(){
+		
+	}
+	
+	public final static String COCHES_TODOS = "SELECT * FROM gestioncoches.coches;";
+	
+	//Consultas para filtrar coches por tipo de motor
+	public final static String COCHES_DIESEL = "SELECT * FROM gestioncoches.coches where tipoMotor = 'Diesel';";
+	public final static String COCHES_GASOLINA = "SELECT * FROM gestioncoches.coches where tipoMotor = 'Gasolina';";
+	public final static String COCHES_HIBRIDOS = "SELECT * FROM gestioncoches.coches where tipoMotor = 'Hibrido';";
+	
+	
+	
+}

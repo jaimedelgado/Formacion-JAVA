@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ALTA DE LA FACTURA</title>
+	</head>
+	<body>
+		<h2>Alta de la factura</h2>
+		
+		<form action="SvAltaFactura">
+			<table>
+				<%--<tr>
+					<td>CÓDIGO FACTURA: </td>
+					<td><input type="text" name="codigoFactura"/></td>
+				</tr> %-->
+				<tr>
+					<td>ID CLIENTE: </td>
+					<td><input type="text" name="idCliente"/></td>
+				</tr>
+				<tr>
+					<td>CANTIDAD: </td>
+					<td><input type="text" name="cantidad"/></td>
+				</tr>
+				<tr>
+					<td>ID PRODUCTO: </td>
+					<td><input type="text" name="idProducto"/></td>
+				</tr>
+				<tr>
+					<td>PRECIO LÍNEA DETALLE: </td>
+					<td><input type="text" name="precioLineaDetalle"/></td>
+				</tr>
+				<tr>
+					<td>OBSERVACIONES: </td>
+					<td><input type="text" name="observaciones"/></td>
+				</tr>	
+				<tr>
+					<td><input type="submit" name="submit"/></td>
+				</tr>		
+			</table>
+		
+		
+		</form>
+		<br/>
+		<a href="index.jsp">index</a>
+	</body>
+</html>

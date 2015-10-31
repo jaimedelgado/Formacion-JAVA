@@ -1,0 +1,5 @@
+package com.jdlsoft.gestionCoches.domain;
+
+public class Coche {
+
+}
